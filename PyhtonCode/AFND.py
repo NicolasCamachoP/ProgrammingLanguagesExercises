@@ -16,22 +16,39 @@ class AFND: #AFD
     def recurrentTravel(self, index, state, finalState, string):        
         #Chek if the actual state is the final state
         if index >= len(string): return state in finalState
+        
         #checking for childs
         isValid = False
         qs = self.transitions.get((state, string[index]))
         if qs != None:
-            for i in qs:
-                isValid = self.recurrentTravel(index + 1, i, finalState, string)
-                if (isValid): return True
-            #end for
+            #It isn't necessary to use recurrence when there is only one path
+            while (len(qs) == 1):
+                index += 1
+                if index >=len(string):
+                    return qs[0] in finalState
+                #End if
+                qs = self.transitions.get((qs[0], string[index]))
+                if qs == None : break
+            #End while
+            
+            #When there is more paths, is helpfull to use recurrence
+            if qs != None:
+                for i in qs:
+                    isValid = self.recurrentTravel(index + 1, i, finalState, string)
+                    if (isValid): return True
+                #end for
+            #End if
         #end if
+        
         #Checking for "e" transitions
-        qs = self.transitions.get((state, 'e'))
+        qs = self.transitions.get((state, ''))
         if qs != None:
             for i in qs:
                 isValid = self.recurrentTravel(index, i, finalState, string)
                 if (isValid): return True
-        #end for
+            #end for
+        #End if
+        
         return False
     #end def
 
@@ -56,29 +73,36 @@ if __name__ == "__main__":
     afnd.add_transitions(1,"1",[1,2])
     afnd.add_transitions(1,"0",[1])
     afnd.add_transitions(2,"0",[3])
-    afnd.add_transitions(2,"e",[3])
+    afnd.add_transitions(2,"",[3])
     afnd.add_transitions(3,"1",[4])
     afnd.add_transitions(4,"0",[4])
     afnd.add_transitions(4,"1",[4])
     
     #Test afnd
     string = "00101"
-    if (afnd.process_string(string, [4])):
+    if (afnd.process_string(string, {4})):
         print(f"The input {string} has been accepted!")
     else:
         print(f"The input {string} has not been accepted!")
     string = "0011"
-    if (afnd.process_string(string, [4])):
+    if (afnd.process_string(string, {4})):
         print(f"The input {string} has been accepted!")
     else:
         print(f"The input {string} has not been accepted!")
     string = "11101"
-    if (afnd.process_string(string, [4])):
+    if (afnd.process_string(string, {4})):
         print(f"The input {string} has been accepted!")
     else:
         print(f"The input {string} has not been accepted!")
     string = "010110"
-    if (afnd.process_string(string, [4])):
+    if (afnd.process_string(string, {4})):
         print(f"The input {string} has been accepted!")
     else:
         print(f"The input {string} has not been accepted!")
+
+    string = "011211"
+    if (afnd.process_string(string, {4})):
+        print(f"The input {string} has been accepted!")
+    else:
+        print(f"The input {string} has not been accepted!")
+#EOF - AFND.py
