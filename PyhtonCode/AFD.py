@@ -71,17 +71,17 @@ if __name__ == "__main__":
 
     #Test AFD
     string = "h@h.b"
-    if (dfa.process_string(string, [5])):
+    if (dfa.process_string(string, {5})):
         print(f"The adress mail formed by {string} is correct!")
     else:
         print(f"The adress mail formed by {string} is not correct!")
     string = "hola@hotmail..com"
-    if (dfa.process_string(string, [5])):
+    if (dfa.process_string(string, {5})):
         print(f"The adress mail formed by {string} is correct!")
     else:
         print(f"The adress mail formed by {string} is not correct!")
     string = "nicolasCamacho@javeriana.edu.co"
-    if (dfa.process_string(string, [5])):
+    if (dfa.process_string(string, {5})):
         print(f"The adress mail formed by {string} is correct!")
     else:
         print(f"The adress mail formed by {string} is not correct!")
