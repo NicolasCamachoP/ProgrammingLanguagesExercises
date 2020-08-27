@@ -14,12 +14,12 @@ class DFA: #AFD
     #end def
 
     def process_string(self, string, finalState):
-        q = 0
+        q = next(iter(self.states))
         for i in string:
             q = self.transitions.get((q,i))
             if (q == None): break
         #end for
-        return  q == finalState
+        return  q in finalState
     #end def
         
     #end def
@@ -66,20 +66,22 @@ if __name__ == "__main__":
     dfa.add_transitions(3,".",4)
     dfa.add_transitions(5,".",4)
 
-    #craeting at ("@") transitions
+    #Creating at ("@") transitions
     dfa.add_transitions(1,"@",2)
+
+    #Test AFD
     string = "h@h.b"
-    if (dfa.process_string(string, 5)):
+    if (dfa.process_string(string, [5])):
         print(f"The adress mail formed by {string} is correct!")
     else:
         print(f"The adress mail formed by {string} is not correct!")
     string = "hola@hotmail..com"
-    if (dfa.process_string(string, 5)):
+    if (dfa.process_string(string, [5])):
         print(f"The adress mail formed by {string} is correct!")
     else:
         print(f"The adress mail formed by {string} is not correct!")
     string = "nicolasCamacho@javeriana.edu.co"
-    if (dfa.process_string(string, 5)):
+    if (dfa.process_string(string, [5])):
         print(f"The adress mail formed by {string} is correct!")
     else:
         print(f"The adress mail formed by {string} is not correct!")
