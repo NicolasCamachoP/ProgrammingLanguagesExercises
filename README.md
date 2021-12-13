@@ -1,4 +1,4 @@
-# ProgrammingLanguagesExercises
+# Programming Languages Exercises
 
 This repository contains some exercises related to the programming languages class. It includes:
 
